@@ -108,7 +108,6 @@ void menu()
 	cout << "====================================================== END ================================================";
 }
 
-
 void menu_thuoc()
 {
 	gioithieu();
@@ -127,6 +126,19 @@ void menu_timthuoc()
 	cout << "1.Them so luong thuoc\n";
 	cout << "2.Sua thong tin thuoc\n";
 	cout << "0.Thoat\n";
+	cout << "====================================================== END ================================================";
+}
+void menu_thongke()
+{
+	gioithieu();
+	gotoxy(0, 12);
+	cout << "================================================== THONG KE ===============================================\n";
+	cout << "1.Thong ke theo Ngay\n";
+	cout << "2.Thong ke theo Thang\n";
+	cout << "3.Thong ke theo Nam\n";
+	cout << "4.Thong ke theo Khoang thoi gian\n";
+	cout << "5.Thong ke nhieu nam\n";
+	cout << "0. Thoat\n";
 	cout << "====================================================== END ================================================";
 }
 void menu_vatlieuyte()
@@ -291,6 +303,7 @@ void giaiphongdsthuoc(DSThuoc &ht)
 	}
 }
 #pragma endregion
+
 #pragma region ====================== Vat Lieu Y Te ================================
 void khoitao_dsvlyt(DSVLYT &dsvlyt)
 {
@@ -344,7 +357,6 @@ NODE_VLYT*	timkiemvlyt_TheoMa(DSVLYT ht, int a)
 	}
 	return cantim;
 }
-
 
 void suathongtinvlyt(NODE_VLYT* &vlyt)
 {
@@ -416,6 +428,302 @@ void giaiphongdsvlyt(DSVLYT &ht)
 		ht = ht->next;
 		delete p;
 	}
+}
+#pragma endregion
+#pragma region ================================= Thong Ke ==================================
+void ThongKe(DSBenhNhan ht, Ngay tungay, Ngay denngay)
+{
+	long int DoanhThu = 0;
+	int SLBenhNhan = 0;
+	bool flag = 0;
+	NODE_BenhNhan* dsbn = ht;
+	//cout << "\n------------------------------------------------- THONG KE ------------------------------------------------\n";
+
+	gotoxy(50, 2);
+	cout << "THONG KE\n\n";
+	cout << left << setw(20) << "Ngay Kham ";
+	cout << left << setw(20) << "Ma Benh Nhan";
+	cout << left << setw(35) << "Ten Benh Nhan";
+	cout << left << setw(20) << "Ngay sinh";
+	cout << left << setw(15) << "Gioi Tinh" << endl;
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	while (dsbn != NULL)
+	{
+		Node_KhamBenh* sk = dsbn->sokham;
+		while (sk != NULL)
+		{
+			if (sk->data.NgayKham >= tungay&&denngay >= sk->data.NgayKham)
+			{
+				//Duyệt toa thuốc trong ngày khám nào đó?
+				for (int i = 0; i < sk->soluongthuoc; i++)
+					DoanhThu += sk->toathuoc[i].soluong*sk->toathuoc[i].gia;
+
+				//Duyệt Dịch Vụ-vật liệu y tế trong ngày khám nào đó?
+				for (int i = 0; i < sk->soluongdvyt; i++)
+					DoanhThu += sk->dvyt[i].gia;
+				flag = 1;
+				cout << setw(20) << sk->data.NgayKham.Xuat() << setw(20) << dsbn->data.ma << setw(35) << dsbn->data.ten << setw(20) << dsbn->data.ngaysinh.Xuat() << setw(15) << dsbn->data.gioitinh << endl;
+
+			}
+			sk = sk->next;
+		}
+		if (flag)
+		{
+			SLBenhNhan++;
+			flag = 0;
+		}
+		dsbn = dsbn->next;
+	}
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	cout << "\nTong so luong benh nhan tu " << tungay.Xuat() << " den " << denngay.Xuat() << " : " << SLBenhNhan << endl;
+	cout << "Tong Doanh Thu tu " << tungay.Xuat() << " den " << denngay.Xuat() << " : " << DoanhThu << " VND" << endl;
+
+}
+
+
+
+void ThongKe_nNam(DSBenhNhan ht, Ngay tunam, Ngay dennam)
+{
+	long int DoanhThu = 0;
+	int SLBenhNhan = 0;
+	bool flag = 0;
+	NODE_BenhNhan* dsbn = ht;
+	gotoxy(50, 2);
+	cout << "THONG KE\n\n";
+	cout << left << setw(20) << "Ngay Kham";
+	cout << left << setw(20) << "Ma Benh Nhan";
+	cout << left << setw(35) << "Ten Benh Nhan";
+	cout << left << setw(20) << "Ngay sinh";
+	cout << left << setw(15) << "Gioi Tinh" << endl;
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	while (dsbn != NULL)
+	{
+		Node_KhamBenh* sk = dsbn->sokham;
+		while (sk != NULL)
+		{
+			if (sk->data.NgayKham.nam <= tunam.nam&&dennam.nam <= sk->data.NgayKham.nam)
+			{
+				for (int i = 0; i <sk->soluongthuoc; i++)
+					DoanhThu += sk->toathuoc[i].soluong*sk->toathuoc[i].gia;
+				for (int i = 0; i < sk->soluongdvyt; i++)
+					DoanhThu += sk->dvyt[i].gia;
+				cout << setw(20) << sk->data.NgayKham.Xuat() << setw(20) << dsbn->data.ma << setw(35) << dsbn->data.ten << setw(20) << dsbn->data.ngaysinh.Xuat() << setw(15) << dsbn->data.gioitinh << endl;
+				flag = 1;
+				break;
+			}
+			else
+			{ 
+				for (int i = 0; i <sk->soluongthuoc; i++)
+					DoanhThu += sk->toathuoc[i].soluong*sk->toathuoc[i].gia;
+				for (int i = 0; i < sk->soluongdvyt; i++)
+					DoanhThu += sk->dvyt[i].gia;
+				cout << setw(20) << sk->data.NgayKham.Xuat() << setw(20) << dsbn->data.ma << setw(35) << dsbn->data.ten << setw(20) << dsbn->data.ngaysinh.Xuat() << setw(15) << dsbn->data.gioitinh << endl;
+				flag = 1;
+				break;
+			}
+			sk = sk->next;
+		}
+		if (flag)
+		{
+			SLBenhNhan++;
+
+			flag = 0;
+		}
+		dsbn = dsbn->next;
+	}
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	cout << "\nTong so luong benh nhan tu " << tunam.Xuat() << " den " << dennam.Xuat() << " : " << SLBenhNhan << endl;
+	cout << "Tong Doanh Thu tu " << tunam.Xuat() << " den " << dennam.Xuat() << " : " << DoanhThu << " VND" << endl;
+
+}
+
+
+
+
+NODE_BenhNhan* ThongKe_BenhnhanKhammax(DSBenhNhan ds)
+{ 
+
+	NODE_BenhNhan* cantim = NULL;
+	NODE_BenhNhan* bn = ds;
+	bool flag = 0;
+	int dem1 ,dem2=0;
+	int mabn;
+	while (bn != NULL){
+		dem1 = 0;
+		Node_KhamBenh* sk = bn->sokham;
+		while (sk != NULL)
+		{
+			dem1++;
+			sk = sk->next;
+		}
+		
+		if (!flag) {
+			cantim = bn;
+			flag = 1;
+			dem2 = dem1;
+		}
+		else if (dem1>dem2){
+			cantim = bn;
+		}
+		bn = bn->next;
+  }
+return cantim;
+}
+
+void ThongKe_Ngay(DSBenhNhan ht, Ngay ngaynhap)
+{
+	long int DoanhThu = 0;
+	int SLBenhNhan = 0;
+	bool flag = 0;
+	NODE_BenhNhan* dsbn = ht;
+	gotoxy(50, 2);
+	cout << "THONG KE\n\n";
+	cout << left << setw(20) << "Ngay Kham";
+	cout << left << setw(20) << "Ma Benh Nhan";
+	cout << left << setw(35) << "Ten Benh Nhan";
+	cout << left << setw(20) << "Ngay sinh";
+	cout << left << setw(15) << "Gioi Tinh" << endl;
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	while (dsbn != NULL)
+	{
+		Node_KhamBenh* sk = dsbn->sokham;
+		while (sk != NULL)
+		{
+			if (sk->data.NgayKham.ngay == ngaynhap.ngay&&sk->data.NgayKham.thang == ngaynhap.thang&&sk->data.NgayKham.nam == ngaynhap.nam)
+			{
+				for (int i = 0; i <sk->soluongthuoc; i++)
+					DoanhThu += sk->toathuoc[i].soluong*sk->toathuoc[i].gia;
+				for (int i = 0; i < sk->soluongdvyt; i++)
+					DoanhThu += sk->dvyt[i].gia;
+				cout << setw(20) << sk->data.NgayKham.Xuat() << setw(20) << dsbn->data.ma << setw(35) << dsbn->data.ten << setw(20) << dsbn->data.ngaysinh.Xuat() << setw(15) << dsbn->data.gioitinh << endl;
+				flag = 1;
+				break;
+			}
+			sk = sk->next;
+		}
+		if (flag)
+		{
+			SLBenhNhan++;
+
+			flag = 0;
+		}
+		dsbn = dsbn->next;
+	}
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	cout << "Tong so luong benh nhan trong ngay " << ngaynhap.Xuat() << " : " << SLBenhNhan << endl;
+	cout << "Tong doanh thu trong ngay " << ngaynhap.Xuat() << " : " << DoanhThu << " VND" << endl;
+
+}
+
+void ThongKe_Thang(DSBenhNhan ht, Ngay ngaynhap)
+{
+	long int DoanhThu = 0;
+	int SLBenhNhan = 0;
+	bool flag = 0;
+	NODE_BenhNhan* dsbn = ht;
+	gotoxy(50, 2);
+	cout << "THONG KE\n\n";
+	cout << left << setw(20) << "Ngay Kham";
+	cout << left << setw(20) << "Ma Benh Nhan";
+	cout << left << setw(35) << "Ten Benh Nhan";
+	cout << left << setw(20) << "Ngay sinh";
+	cout << left << setw(15) << "Gioi Tinh" << endl;
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	while (dsbn != NULL)
+	{
+		Node_KhamBenh* sk = dsbn->sokham;
+		while (sk != NULL)
+		{
+			if (ngaynhap.thang == sk->data.NgayKham.thang&&ngaynhap.nam == sk->data.NgayKham.nam)
+			{
+				for (int i = 0; i <sk->soluongthuoc; i++)
+					DoanhThu += sk->toathuoc[i].soluong*sk->toathuoc[i].gia;
+				for (int i = 0; i < sk->soluongdvyt; i++)
+					DoanhThu += sk->dvyt[i].gia;
+				flag = 1;
+				cout << setw(20) << sk->data.NgayKham.Xuat() << setw(20) << dsbn->data.ma << setw(35) << dsbn->data.ten << setw(20) << dsbn->data.ngaysinh.Xuat() << setw(15) << dsbn->data.gioitinh << endl;
+
+			}
+			sk = sk->next;
+		}
+		if (flag)
+		{
+			SLBenhNhan++;
+			flag = 0;
+		}
+		dsbn = dsbn->next;
+	}
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	cout << "Tong so luong benh nhan trong thang " << ngaynhap.thang << "/" << ngaynhap.nam << " : " << SLBenhNhan << endl;
+	cout << "Tong doanh thu trong thang " << ngaynhap.thang << "/" << ngaynhap.nam << " : " << DoanhThu << " VND" << endl;
+
+}
+
+void ThongKe_Nam(DSBenhNhan ht, Ngay ngaynhap)
+{
+	long int DoanhThu = 0;
+	int SLBenhNhan = 0;
+	bool flag = 0;
+	NODE_BenhNhan* dsbn = ht;
+	gotoxy(50, 2);
+	cout << "THONG KE\n\n";
+	cout << left << setw(20) << "Ngay Kham";
+	cout << left << setw(20) << "Ma Benh Nhan";
+	cout << left << setw(35) << "Ten Benh Nhan";
+	cout << left << setw(20) << "Ngay sinh";
+	cout << left << setw(15) << "Gioi Tinh" << endl;
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	while (dsbn != NULL)
+	{
+		Node_KhamBenh* sk = dsbn->sokham;
+		while (sk != NULL)
+		{
+
+			if (ngaynhap.nam == sk->data.NgayKham.nam)
+			{
+				//Duyệt toa thuốc trong ngày khám nào đó ?
+				for (int i = 0; i <sk->soluongthuoc; i++)
+					DoanhThu += sk->toathuoc[i].soluong*sk->toathuoc[i].gia;
+				//Duyệt Dịch Vụ-vật liệu y tế trong ngày khám nào đó?
+				for (int i = 0; i < sk->soluongdvyt; i++)
+					DoanhThu += sk->dvyt[i].gia;
+				flag = 1;
+				cout << setw(20) << sk->data.NgayKham.Xuat() << setw(20) << dsbn->data.ma << setw(35) << dsbn->data.ten << setw(20) << dsbn->data.ngaysinh.Xuat() << setw(15) << dsbn->data.gioitinh << endl;
+
+			}
+			sk = sk->next;
+		}
+		if (flag)
+		{
+			SLBenhNhan++;
+			flag = 0;
+		}
+		dsbn = dsbn->next;
+	}
+	cout << setfill('-');
+	cout << setw(107) << "-" << endl;
+	cout << setfill(' ');
+	cout << "Tong so luong benh nhan trong nam " << ngaynhap.nam << " : " << SLBenhNhan << endl;
+	cout << "Tong doanh thu trong nam " << ngaynhap.nam << " : " << DoanhThu << " VND" << endl;
+
 }
 #pragma endregion
 
