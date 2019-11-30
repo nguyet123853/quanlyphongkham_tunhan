@@ -129,6 +129,18 @@ void menu_timthuoc()
 	cout << "0.Thoat\n";
 	cout << "====================================================== END ================================================";
 }
+void menu_vatlieuyte()
+{
+	gioithieu();
+	gotoxy(0, 12);
+	cout << "================================================== VAT LIEU Y TE ===============================================\n";
+	cout << "1.Them Vat Lieu Y Te\n";
+	cout << "2.Xoa Vat Lieu Y Te\n";
+	cout << "3.Sua Thong Tin Vat Lieu Y Te\n";
+	cout << "4.Xuat Danh Sach Vat Lieu Y Te\n";
+	cout << "0. Thoat\n";
+	cout << "====================================================== END ================================================";
+}
 
 #pragma endregion
 
@@ -279,6 +291,134 @@ void giaiphongdsthuoc(DSThuoc &ht)
 	}
 }
 #pragma endregion
+#pragma region ====================== Vat Lieu Y Te ================================
+void khoitao_dsvlyt(DSVLYT &dsvlyt)
+{
+	dsvlyt = NULL;
+}
+bool kiemtra_dsvlyt_rong(DSVLYT &dsvlyt)
+{
+	return dsvlyt == NULL;
+}
+NODE_VLYT* tao_node_vlyt(VatLieuYTe vlyt)
+{
+	NODE_VLYT* p = new NODE_VLYT;
+	p->data = vlyt;
+	p->next = NULL;
+	return p;
+}
+
+
+int themvlyt(DSVLYT &ht, int &code)
+{
+
+	VatLieuYTe a;
+	a.Nhap(code);
+	code++;
+	NODE_VLYT* p = new NODE_VLYT;
+	p->data = a;
+	p->next = NULL;
+	if (ht == NULL) ht = p;
+	else {
+		NODE_VLYT* t = ht;
+		do {
+			if (t->next == NULL) break;
+			else t = t->next;
+		} while (1);
+		t->next = p;
+	}
+	return 1;
+}
+NODE_VLYT*	timkiemvlyt_TheoMa(DSVLYT ht, int a)
+{
+	NODE_VLYT* cantim;
+	khoitao_dsvlyt(cantim);
+	NODE_VLYT* p = ht;
+	while (p != NULL)
+	{
+		if (p->data.ma == a) {
+			cantim = p;
+			break;
+		}
+		p = p->next;
+	}
+	return cantim;
+}
+
+
+void suathongtinvlyt(NODE_VLYT* &vlyt)
+{
+	cout << "Ten Moi : "; getline(cin, vlyt->data.ten);
+	vlyt->data.dongia = nhapsonguyen("Don Gia : ");
+	cout << "Sua Thong Tin Vat Lieu Y Te Thanh Cong !\n";
+}
+int xoavlyt(DSVLYT &ht, int a)
+{
+	NODE_VLYT* p = ht;
+	if (p != NULL)
+	{
+		if (p->data.ma == a)
+		{
+			if (ht->data.slttsohuu) return 0;
+			ht = ht->next;
+			delete p;
+			return 1;
+		}
+		else
+		{
+			NODE_VLYT* before = p;
+			p = p->next;
+			while (p != NULL&&p->data.ma != a)
+			{
+				before = p;
+				p = p->next;
+			}
+			if (p != NULL&&!p->data.slttsohuu)
+			{
+				before->next = p->next;
+				delete p;
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+void xuatdsvlyt(DSVLYT ht)
+{
+
+	NODE_VLYT* p = ht;
+
+	gotoxy(40, 3);
+	cout << "DANH SACH VAT LIEU Y TE\n\n";
+	cout << setw(10) << left << "Ma VLYT";
+	cout << setw(40) << left << "Ten VLYT";
+	cout << setw(30) << left << "Gia Dich Vu (VND)";
+	cout << setw(20) << left << "Tinh Trang" << endl;
+	cout << setfill('-');
+	cout << setw(110) << "-" << endl;
+	cout << setfill(' ');
+	while (p != NULL)
+	{
+		p->data.xuat();
+		p = p->next;
+	}
+	cout << setfill('-');
+	cout << setw(110) << "-" << endl;
+	cout << setfill(' ');
+	cout << "\n";
+}
+void giaiphongdsvlyt(DSVLYT &ht)
+{
+	NODE_VLYT* p;
+	while (ht != NULL)
+	{
+		p = ht;
+		ht = ht->next;
+		delete p;
+	}
+}
+#pragma endregion
+
 #pragma region ============================ File ==============================
 void DocFileDSThuoc(ifstream &FileIn, DSThuoc &ht, int &size)
 {

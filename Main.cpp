@@ -158,6 +158,60 @@ int main()
 		case 3:
 			break;
 		case 4:
+		do{
+				system("cls");
+				system("color 07");
+				SetConsoleTextAttribute(h, FOREGROUND_INTENSITY);
+				menu_vatlieuyte();
+				luachon2 = nhapsonguyen("Nhap lua chon : ");
+				switch (luachon2)
+				{
+
+					//Thêm vật liệu y tế
+				case 1:
+					if (themvlyt(DanhSachVatLieuYTe, CapPhatSTT_VLYT) == 1){
+						SetConsoleTextAttribute(h, 14);
+						cout << "Them thanh cong!\n";
+					}
+					else{
+						SetConsoleTextAttribute(h, FOREGROUND_RED);
+						cout << "Khong them duoc!\n";
+					}
+					system("pause");
+					break;
+
+					//Xóa vật liệu y tế
+				case 2:
+					cout << "Nhap ma thuoc can xoa :";
+					cin >> macantim;
+					cin.ignore();
+					if (xoavlyt(DanhSachVatLieuYTe, macantim) == 1) cout << "Xoa thanh cong!\n";
+					else cout << "Khong xoa duoc!\n";
+					system("pause");
+					break;
+					//Sửa thông tin vật liệu y tế
+				case 3:
+					macantim = nhapsonguyen("\nNhap ma vlyt can sua : ");
+					vlyt = timkiemvlyt_TheoMa(DanhSachVatLieuYTe, macantim);
+					if (vlyt != NULL)
+					{
+						suathongtinvlyt(vlyt);
+					}
+					else cout << "Khong tim thay vat lieu y te !";
+					system("pause");
+					break;
+					// Xuất danh sách vật liệu y tế
+				case 4:
+					system("cls");
+					system("color 70");
+					xuatdsvlyt(DanhSachVatLieuYTe);
+					system("pause");
+					break;
+				default:
+					break;
+				}
+			} while (luachon2 != 0);
+			system("pause");
 			break;
 		default:
 			break;
