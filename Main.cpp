@@ -412,8 +412,130 @@ int main()
 			break;
 			//Thống kê số lượng và liệt kê ds bệnh nhân , doanh thu theo ngày, tháng , năm , khoảng thời gian
 		case 3:
+		do{
+        system("cls");
+
+				SetConsoleTextAttribute(h, FOREGROUND_INTENSITY);
+				menu_thongke();
+				luachon5 = nhapsonguyen("Nhap lua chon : ");
+				fflush(stdin);
+				switch (luachon5)
+				{
+					//Thống kê theo ngày
+				case 1:
+					tungay.Nhap();
+					system("cls");
+					system("color 03");
+					ThongKe_Ngay(DanhSachBenhNhan, tungay);
+					system("pause");
+					break;
+
+					///Thống kê theo tháng
+				case 2:
+					tungay.thang = nhapsonguyen("Nhap thang : ");
+					tungay.nam = nhapsonguyen("Nhap Nam : ");
+					system("cls");
+					system("color 02");
+
+					ThongKe_Thang(DanhSachBenhNhan, tungay);
+					system("pause");
+					break;
+
+					//Thống kê theo năm
+				case 3:
+					tungay.nam = nhapsonguyen("Nhap Nam : ");
+					system("cls");
+					system("color 05");
+					ThongKe_Nam(DanhSachBenhNhan, tungay);
+					system("pause");
+					break;
+					//Thống kê theo khoảng thời gian
+				case 4:
+					cout << "\n\nTu Ngay : \n";
+					tungay.Nhap();
+					cout << "\nDen Ngay : \n";
+					denngay.Nhap();
+					system("cls");
+					system("color 00");
+					ThongKe(DanhSachBenhNhan, tungay, denngay);
+					system("pause");
+					break;
+				case 5:
+					cout << "\n\nTu nam: \n";
+					tungay.nam = nhapsonguyen("nhap nam: ");
+					cout << "\n\nDen nam: \n";
+					denngay.nam = nhapsonguyen("nhap nam: ");
+					system("cls");
+					system("color 00");
+					ThongKe_nNam(DanhSachBenhNhan, tungay, denngay);
+					system("pause");
+					break;
+				case 6:
+					benhnhan = ThongKe_BenhnhanKhammax(DanhSachBenhNhan);
+					benhnhan->data.xuat();
+					system("pause");
+					break;
+					//-------------------------------------------------------------------------------
+				default:
+					break;
+				}
+			} while (luachon5 != 0);
 			break;
 		case 4:
+		do{
+				system("cls");
+				system("color 07");
+				SetConsoleTextAttribute(h, FOREGROUND_INTENSITY);
+				menu_vatlieuyte();
+				luachon2 = nhapsonguyen("Nhap lua chon : ");
+				switch (luachon2)
+				{
+
+					//Thêm vật liệu y tế
+				case 1:
+					if (themvlyt(DanhSachVatLieuYTe, CapPhatSTT_VLYT) == 1){
+						SetConsoleTextAttribute(h, 14);
+						cout << "Them thanh cong!\n";
+					}
+					else{
+						SetConsoleTextAttribute(h, FOREGROUND_RED);
+						cout << "Khong them duoc!\n";
+					}
+					system("pause");
+					break;
+
+					//Xóa vật liệu y tế
+				case 2:
+					cout << "Nhap ma thuoc can xoa :";
+					cin >> macantim;
+					cin.ignore();
+					if (xoavlyt(DanhSachVatLieuYTe, macantim) == 1) cout << "Xoa thanh cong!\n";
+					else cout << "Khong xoa duoc!\n";
+					system("pause");
+					break;
+					//Sửa thông tin vật liệu y tế
+				case 3:
+					macantim = nhapsonguyen("\nNhap ma vlyt can sua : ");
+					vlyt = timkiemvlyt_TheoMa(DanhSachVatLieuYTe, macantim);
+					if (vlyt != NULL)
+					{
+						suathongtinvlyt(vlyt);
+					}
+					else cout << "Khong tim thay vat lieu y te !";
+					system("pause");
+					break;
+					// Xuất danh sách vật liệu y tế
+				case 4:
+					system("cls");
+					system("color 70");
+					xuatdsvlyt(DanhSachVatLieuYTe);
+					system("pause");
+					break;
+				default:
+					break;
+				}
+			} while (luachon2 != 0);
+			system("pause");
 			break;
 		default:
 			break;
