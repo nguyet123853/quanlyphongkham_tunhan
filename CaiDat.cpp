@@ -27,7 +27,7 @@ bool kiemtraso(string chuoi)
 	if (chuoi == "") return false;
 	for (unsigned int i = 0; i < chuoi.size(); i++)
 	{
-		if (chuoi[i] <'0' || chuoi[i] > '9')
+		if (chuoi[i] <'0' && chuoi[i] > '9')
 			return false;
 	}
 	return true;
