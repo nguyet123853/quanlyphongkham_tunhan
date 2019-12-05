@@ -27,7 +27,7 @@ bool kiemtraso(string chuoi)
 	if (chuoi == "") return false;
 	for (unsigned int i = 0; i < chuoi.size(); i++)
 	{
-		if (chuoi[i] <'0' && chuoi[i] > '9')
+		if (chuoi[i] <'0' || chuoi[i] > '9')
 			return false;
 	}
 	return true;
@@ -648,7 +648,7 @@ void ThongKe_Thang(DSBenhNhan ht, Ngay ngaynhap)
 		Node_KhamBenh* sk = dsbn->sokham;
 		while (sk != NULL)
 		{
-			if (ngaynhap.thang == sk->data.NgayKham.thang&&ngaynhap.nam == sk->data.NgayKham.nam)
+			if (ngaynhap.thang == sk->data.NgayKham.thang||ngaynhap.nam == sk->data.NgayKham.nam)
 			{
 				for (int i = 0; i <sk->soluongthuoc; i++)
 					DoanhThu += sk->toathuoc[i].soluong*sk->toathuoc[i].gia;
