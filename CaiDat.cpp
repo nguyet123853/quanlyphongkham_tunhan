@@ -558,7 +558,7 @@ NODE_BenhNhan* ThongKe_BenhnhanKhammax(DSBenhNhan ds)
 	int mabn;
 	while (bn != NULL){
 		dem1 = 0;
-		Node_KhamBenh* sk = bn->sokham;
+		Node_KhamBenh* sk && bn->sokham;
 		while (sk != NULL)
 		{
 			dem1++;
