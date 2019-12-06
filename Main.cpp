@@ -64,6 +64,261 @@ int main()
 		{
 			//Quản lý bệnh nhân
 		case 1:
+				system("cls");
+				SetConsoleTextAttribute(h, FOREGROUND_INTENSITY);
+				menu_benhnhan();
+				luachon1 = nhapsonguyen("Nhap lua chon :");
+				switch (luachon1)
+				{
+					//Thêm bệnh nhân 
+				case 1:
+					if (thembenhnhan(DanhSachBenhNhan, DanhSachThuoc, DanhSachVatLieuYTe, CapPhatSTT_Thuoc, CapPhatSTT_BenhNhan, CapPhatSTT_VLYT) == 1){
+						cout << "Them thanh cong!\n";
+					}
+					else cout << "Khong them duoc!\n";
+					system("pause");
+					break;
+
+					//Xóa bệnh nhân
+				case 2:
+					cout << "Nhap ma benh nhan can xoa :";
+					cin >> macantim;
+					if (xoabenhnhan(DanhSachBenhNhan, macantim) == 1) cout << "Xoa thanh cong!\n";
+					else cout << "Khong xoa duoc!\n";
+					system("pause");
+					break;
+					//Tìm kiếm bệnh nhân
+				case 3:
+					do{
+						system("cls");
+						menu_timkiembenhnhan();
+						luachon3 = nhapsonguyen("Nhap lua chon : ");
+						switch (luachon3)
+						{
+							//Theo mã bệnh nhân
+						case 1:
+							macantim = nhapsonguyen("Nhap ma benh nhan can tim : ");
+							benhnhan = TimKiem_TheoMa(DanhSachBenhNhan, macantim);
+							if (benhnhan != NULL)
+							{
+
+								do
+								{
+									system("cls");
+									gotoxy(40, 3);
+									cout << "THONG TIN BENH NHAN \n\n";
+									benhnhan->data.xuat();
+									menu_tiepbenhnhan();
+									luachon4 = nhapsonguyen("Nhap lua chon : ");
+									switch (luachon4)
+									{
+									case 1:
+										BenhNhanKhamBenh(benhnhan->sokham, DanhSachThuoc, DanhSachVatLieuYTe, CapPhatSTT_Thuoc, CapPhatSTT_VLYT);
+										system("pause");
+										break;
+									case 2:
+										Show_LichSuKham(benhnhan);
+										system("pause");
+										break;
+									case 3:
+										tungay.Nhap();
+										vt = benhnhan->sokham;
+										while (vt != NULL)
+										{
+											if (vt->data.NgayKham.ngay == tungay.ngay&&vt->data.NgayKham.thang == tungay.thang&&vt->data.NgayKham.nam == tungay.nam)
+											{
+												In_DonThuoc(benhnhan, vt);
+												break;
+											}
+											vt = vt->next;
+										}
+										system("pause");
+										break;
+										//Sửa thông tin bệnh nhân
+									case 4:
+										suathongtinbenhnhan(benhnhan);
+										system("pause");
+										break;
+									default:
+										break;
+									}
+								} while (luachon4 != 0);
+
+							}
+							else cout << "Khong tim thay benh nhan!\n";
+							system("pause");
+							break;
+
+
+							//Theo tên bệnh nhân
+
+						case 2:
+
+							Ten = kiemtrachuoi("Nhap ten benh nhan can tim : ");
+							benhnhan = TimKiem_TheoTen(DanhSachBenhNhan, Ten);
+							if (benhnhan != NULL)
+							{
+								do
+								{
+									system("cls");
+									gotoxy(40, 3);
+									cout << "THONG TIN BENH NHAN\n\n";
+									benhnhan->data.xuat();
+									menu_tiepbenhnhan();
+									luachon4 = nhapsonguyen("Nhap lua chon : ");
+									switch (luachon4)
+									{
+										//Tái khám
+									case 1:
+										BenhNhanKhamBenh(benhnhan->sokham, DanhSachThuoc, DanhSachVatLieuYTe, CapPhatSTT_Thuoc, CapPhatSTT_VLYT);
+										system("pause");
+										break;
+										//Xem lịch sử khám
+									case 2:
+										Show_LichSuKham(benhnhan);
+										system("pause");
+										break;
+										//Xem đơn thuốc 
+									case 3:
+										tungay.Nhap();
+										vt = benhnhan->sokham;
+										while (vt != NULL)
+										{
+											if (vt->data.NgayKham.ngay == tungay.ngay&&vt->data.NgayKham.thang == tungay.thang&&vt->data.NgayKham.nam == tungay.nam)
+											{
+												In_DonThuoc(benhnhan, vt);
+												break;
+											}
+											vt = vt->next;
+										}
+										system("pause");
+										break;
+										//Sửa thông tin bệnh nhân
+									case 4:
+										suathongtinbenhnhan(benhnhan);
+										system("pause");
+										break;
+									default:
+										break;
+									}
+								} while (luachon4 != 0);
+							}
+							else cout << "Khong tim thay benh nhan!\n";
+
+							system("pause");
+							break;
+							//Tìm kiếm theo ngày sinh
+						case 3:
+							cout << "Nhap ngay sinh can tim : "; tungay.Nhap();
+							benhnhan = TimKiem_TheoNgaySinh(DanhSachBenhNhan, tungay);
+							if (benhnhan != NULL)
+							{
+								do
+								{
+									system("cls");
+									gotoxy(40, 3);
+									cout << "THONG TIN BENH NHAN\n\n";
+									benhnhan->data.xuat();
+									menu_tiepbenhnhan();
+									luachon4 = nhapsonguyen("Nhap lua chon : ");
+									switch (luachon4)
+									{
+										//Tái khám
+									case 1:
+										BenhNhanKhamBenh(benhnhan->sokham, DanhSachThuoc, DanhSachVatLieuYTe, CapPhatSTT_Thuoc, CapPhatSTT_VLYT);
+										system("pause");
+										break;
+										//Xem lịch sử khám
+									case 2:
+										Show_LichSuKham(benhnhan);
+										system("pause");
+										break;
+										//Xem đơn thuốc 
+									case 3:
+										tungay.Nhap();
+										vt = benhnhan->sokham;
+										while (vt != NULL)
+										{
+											if (vt->data.NgayKham.ngay == tungay.ngay&&vt->data.NgayKham.thang == tungay.thang&&vt->data.NgayKham.nam == tungay.nam)
+											{
+												In_DonThuoc(benhnhan, vt);
+												break;
+											}
+											vt = vt->next;
+										}
+										system("pause");
+										break;
+										//Sửa thông tin bệnh nhân
+									case 4:
+										suathongtinbenhnhan(benhnhan);
+										system("pause");
+										break;
+									default:
+										break;
+									}
+								} while (luachon4 != 0);
+							}
+							else cout << "Khong tim thay benh nhan!\n";
+
+							system("pause");
+							break;
+
+
+							//-------------------------------------------------------------------------------
+						default:
+							break;
+						}
+					} while (luachon3 != 0);
+					system("pause");
+					break;
+					//Xuất danh sách bệnh nhân
+				case 4:
+					do{
+						system("cls");
+						system("color 07");
+						menu_xuatdsbenhnhan();
+						luachon3 = nhapsonguyen("Nhap lua chon : ");
+						switch (luachon3)
+						{
+							//Xuất toàn bộ dsbn
+						case 1:
+							system("cls");
+							system("color 70");
+							//SetConsoleTextAttribute(h, 139);
+							xuatdsbenhnhan(DanhSachBenhNhan);
+							system("pause");
+							break;
+
+							//Xuất theo giới tính
+						case 2:
+							cout << "Gioi Tinh : "; getline(cin, Ten);
+							system("cls");
+							system("color 70");
+							xuatdsbenhnhan_theogioitinh(DanhSachBenhNhan, Ten);
+							system("pause");
+							break;
+							//Xuất theo ngày khám ( từ ngày -> đến ngày )
+						case 3:
+							cout << "\n\nTu Ngay : \n";
+							tungay.Nhap();
+							cout << "\nDen Ngay : \n";
+							denngay.Nhap();
+							system("cls");
+							system("color 70");
+							xuatdsbenhnhan_theongaykham(DanhSachBenhNhan, tungay, denngay);
+							system("pause");
+							break;
+							//-------------------------------------------------------------------------------
+						default:
+							break;
+						}
+					} while (luachon3 != 0);
+					system("pause");
+					break;
+				default:
+					break;
+				}
+			} while (luachon1 != 0);
 			break;
 			//Quản lý kho thuốc
 		case 2:
@@ -156,8 +411,13 @@ int main()
 			break;
 			//Thống kê số lượng và liệt kê ds bệnh nhân , doanh thu theo ngày, tháng , năm , khoảng thời gian
 		case 3:
+<<<<<<< HEAD
 		do{
         system("cls");
+=======
+
+				system("cls");
+>>>>>>> parent of 2da84a4... Theem chức năng thống kê vào 2 file CaiDat.cpp và Main.cpp
 
 				SetConsoleTextAttribute(h, FOREGROUND_INTENSITY);
 				menu_thongke();

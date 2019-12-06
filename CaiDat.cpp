@@ -108,6 +108,15 @@ void menu()
 	cout << "====================================================== END ================================================";
 }
 
+<<<<<<< HEAD
+=======
+	cout << "\n============================================= XUAT DS BENH NHAN ==========================================\n";
+	cout << "1.Xuat Toan Bo\n";
+	cout << "2.Xuat Theo Gioi Tinh\n";
+	cout << "3.Xuat Theo Ngay Kham\n";
+	cout << "====================================================== END ================================================";
+}
+>>>>>>> parent of 2da84a4... Theem chức năng thống kê vào 2 file CaiDat.cpp và Main.cpp
 void menu_thuoc()
 {
 	gioithieu();
@@ -128,16 +137,14 @@ void menu_timthuoc()
 	cout << "0.Thoat\n";
 	cout << "====================================================== END ================================================";
 }
-void menu_thongke()
-{
+
 	gioithieu();
 	gotoxy(0, 12);
-	cout << "================================================== THONG KE ===============================================\n";
-	cout << "1.Thong ke theo Ngay\n";
-	cout << "2.Thong ke theo Thang\n";
-	cout << "3.Thong ke theo Nam\n";
-	cout << "4.Thong ke theo Khoang thoi gian\n";
-	cout << "5.Thong ke nhieu nam\n";
+	cout << "================================================== VAT LIEU Y TE ===============================================\n";
+	cout << "1.Them Vat Lieu Y Te\n";
+	cout << "2.Xoa Vat Lieu Y Te\n";
+	cout << "3.Sua Thong Tin Vat Lieu Y Te\n";
+	cout << "4.Xuat Danh Sach Vat Lieu Y Te\n";
 	cout << "0. Thoat\n";
 	cout << "====================================================== END ================================================";
 }
@@ -303,6 +310,7 @@ void giaiphongdsthuoc(DSThuoc &ht)
 	}
 }
 #pragma endregion
+<<<<<<< HEAD
 
 #pragma region ====================== Vat Lieu Y Te ================================
 void khoitao_dsvlyt(DSVLYT &dsvlyt)
@@ -727,6 +735,8 @@ void ThongKe_Nam(DSBenhNhan ht, Ngay ngaynhap)
 }
 #pragma endregion
 
+=======
+>>>>>>> parent of 2da84a4... Theem chức năng thống kê vào 2 file CaiDat.cpp và Main.cpp
 #pragma region ============================ File ==============================
 void DocFileDSThuoc(ifstream &FileIn, DSThuoc &ht, int &size)
 {
