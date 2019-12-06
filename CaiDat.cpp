@@ -454,7 +454,7 @@ void ThongKe(DSBenhNhan ht, Ngay tungay, Ngay denngay)
 		Node_KhamBenh* sk = dsbn->sokham;
 		while (sk != NULL)
 		{
-			if (sk->data.NgayKham >= tungay&&denngay >= sk->data.NgayKham)
+			if (sk->data.NgayKham >= tungay||denngay >= sk->data.NgayKham)
 			{
 				//Duyệt toa thuốc trong ngày khám nào đó?
 				for (int i = 0; i < sk->soluongthuoc; i++)
