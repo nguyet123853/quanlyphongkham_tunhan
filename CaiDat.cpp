@@ -734,6 +734,8 @@ NODE_BenhNhan*  TimKiem_TheoNgaySinh(DSBenhNhan ht, Ngay ngaynhap)
 	NODE_BenhNhan* cantim = NULL;
 
 	int size = 0;
+	
+	bool tinhieu1 = false, tinhieu2 = false;
 
 	while (p != NULL)
 	{
