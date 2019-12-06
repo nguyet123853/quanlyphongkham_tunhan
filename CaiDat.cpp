@@ -1572,20 +1572,7 @@ void GhiFileDSThuoc(ofstream &FileOut, DSThuoc ht, int size)
 		ht = ht->next;
 	}
 }
-	if (kiemtra_dsvlyt_rong(ht)) {
-		FileOut << -99; return;
-	}
-	FileOut << size << "\n";
-	while (ht != NULL)
-	{
-		FileOut << ht->data.ma << "-";
-		FileOut << ht->data.dongia << "-";
-		FileOut << ht->data.slttsohuu << "-";
-		FileOut << ht->data.ten;
-		if (ht->next != NULL) FileOut << "\n";
-		ht = ht->next;
-	}
-}
+	
 void DocFileDSVLYT(ifstream &FileIn, DSVLYT &ht, int &size)
 {
 	if (!FileIn);
