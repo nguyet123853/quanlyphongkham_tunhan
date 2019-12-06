@@ -490,5 +490,54 @@ void GhiFileDSThuoc(ofstream &FileOut, DSThuoc ht, int size)
 		ht = ht->next;
 	}
 }
+void DocFileDSVLYT(ifstream &FileIn, DSVLYT &ht, int &size)
+{
+	if (!FileIn);
+	else{
+		FileIn >> size;
+		if (size == -99){
+			size = 1;
+			return;
+		}
+		NODE_VLYT* p;
+		while (!FileIn.eof())
+		{
+			p = new NODE_VLYT;
+			FileIn >> p->data.ma;
+			FileIn.seekg(1, 1);
+			FileIn >> p->data.dongia;
+			FileIn.seekg(1, 1);
+			FileIn >> p->data.slttsohuu;
+			FileIn.seekg(1, 1);
+			getline(FileIn, p->data.ten);
+			p->next = NULL;
+			if (ht == NULL)
+				ht = p;
+			else
+			{
+				NODE_VLYT* s = ht;
+				while (s->next != NULL) s = s->next;
+				s->next = p;
+			}
+		}
+	}
+}
+void GhiFileDSVLYT(ofstream &FileOut, DSVLYT ht, int size)
+{
+	if (kiemtra_dsvlyt_rong(ht)) {
+		FileOut << -99; return;
+	}
+	FileOut << size << "\n";
+	while (ht != NULL)
+	{
+		FileOut << ht->data.ma << "-";
+		FileOut << ht->data.dongia << "-";
+		FileOut << ht->data.slttsohuu << "-";
+		FileOut << ht->data.ten;
+		if (ht->next != NULL) FileOut << "\n";
+		ht = ht->next;
+	}
+}
 
 #pragma endregion
+
