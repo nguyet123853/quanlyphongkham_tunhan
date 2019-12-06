@@ -669,7 +669,7 @@ NODE_BenhNhan* TimKiem_TheoMa(DSBenhNhan ht, int a)
 	NODE_BenhNhan* p = ht;
   while (p != NULL)
 	{
-		if (p->data.ma == a) {
+		if (p->data.ma = a) {
 			cantim = p;
 			break;
 		}
