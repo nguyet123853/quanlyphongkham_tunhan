@@ -735,8 +735,6 @@ NODE_BenhNhan*  TimKiem_TheoNgaySinh(DSBenhNhan ht, Ngay ngaynhap)
 
 	int size = 0;
 
-	bool tinhieu1 = false, tinhieu2 = false;
-
 	while (p != NULL)
 	{
 		if (p->data.ngaysinh.ngay == ngaynhap.ngay&&p->data.ngaysinh.thang == ngaynhap.thang&&p->data.ngaysinh.nam == ngaynhap.nam)
