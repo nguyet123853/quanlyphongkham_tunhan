@@ -697,7 +697,7 @@ void ThongKe_Nam(DSBenhNhan ht, Ngay ngaynhap)
 		while (sk != NULL)
 		{
 
-			if (ngaynhap.nam => sk->data.NgayKham.nam)
+			if (ngaynhap.nam == sk->data.NgayKham.nam)
 			{
 				//Duyệt toa thuốc trong ngày khám nào đó ?
 				for (int i = 0; i <sk->soluongthuoc; i++)
